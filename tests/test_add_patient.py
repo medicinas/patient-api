@@ -1,31 +1,31 @@
 import pytest
 import requests
 from collections import Counter
-# def test_hello():
-#     response = app.test_client().get('/Hello')
+import random,json
+import random, string
 
-#     assert response.status_code == 200
-#     assert response.data == b'Hello, World!'
-
+def randomword(length):
+   letters = string.ascii_lowercase
+   return ''.join(random.choice(letters) for i in range(length))
 def test_getdetails():
-
-
+    
     url = 'http://127.0.0.1:5000/api/details' # The root url of the flask app
 
-    data ="""{
-			"cityid": 931,
-            "numberid": 22,
-	         "healthinsuranceid": 22,
-            "id": 22,
-            "name": "we",
-            "healthcareid": 413,
-            "regionid": 332,
-            "countryid": 23,
-            "status": "oksafe",
-            "lastname": "pos"
-         }"""
 
-    response = requests.post(url, data=data, headers={'Content-Type': 'application/json'})
+    data ={
+			"cityid": random.randint(1,1000),
+            "numberid":  random.randint(1,1000),
+	         "healthinsuranceid":  random.randint(1,1000),
+            "id":  random.randint(1,1000),
+            "name":randomword(8),
+            "healthcareid": random.randint(1,1000),
+            "regionid": random.randint(1,1000),
+            "countryid": 413,
+            "status": "oksafe",
+            "lastname": randomword(9)
+         }
+
+    response = requests.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
     print(response.json())
     print(response.request.headers['Content-Type'])
 
